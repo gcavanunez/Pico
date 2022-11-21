@@ -1,3 +1,5 @@
+-- SQL notes
+
 -- CREATE TABLE restaurants (
 --     id INT,
 --     name VARCHAR(50),
