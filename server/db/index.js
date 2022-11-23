@@ -1,4 +1,4 @@
-// importing pg library ofr postgres use
+// importing pg library for postgres use
 const { Pool } = require('pg')
 const pool = new Pool(
     // The below object of environment variables is acceptable, however, pg knows to look for them in the .env file
