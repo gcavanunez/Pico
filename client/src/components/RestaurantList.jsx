@@ -16,20 +16,24 @@ import RestaurantFinder from '../apis/RestaurantFinder';
   
 //       fetchData();
 //     }, []);
-
+const fetchData = async () => {
+  try {
+    const {data} = await RestaurantFinder.get("/");
+    console.log(data);
+    return data
+  } catch (err) {
+    console.error('Yo something went wrong')
+  }
+};
 
 const RestaurantList = () => {
-
+    const [restaurants, setRestaurants] = React.useState([])
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await RestaurantFinder.get("/");
-                console.log(response);
-              } catch (err) {}
-        };
-      
-
-      fetchData();
+      fetchData().then((data)=>{
+        if(data.data){
+          setRestaurants(data.data.restaurant)
+        }
+      });
     }, []);
 
   return (
@@ -46,13 +50,12 @@ const RestaurantList = () => {
                 </tr>
             </thead>
             <tbody>
-                {/* {restaurants?.map((restaurant) => { // Added the question mark after the variable for optional chaining 
-
+                {restaurants.map((restaurant) => { // Added the question mark after the variable for optional chaining 
                     return (
-                        <tr>
+                        <tr key={restaurant.id}>
                             <td>{restaurant.name}</td>
                             <td>{restaurant.location}</td>
-                            <td>{"$".repeat(restaurant.price_range)}</td>
+                            <td>${restaurant.price_range}</td>
                             <td>reviews</td>
                             <td>
                                 <button className="btn btn-warning">Update</button>
@@ -63,10 +66,10 @@ const RestaurantList = () => {
                         </tr>
                     )
 
-                })} */}
+                })}
 
 
-                <tr>
+                {/* <tr>
                     <td>mcdonalds</td>
                     <td>New York</td>
                     <td>$$</td>
@@ -82,7 +85,7 @@ const RestaurantList = () => {
                     <td>Rating</td>
                     <td><button className="btn btn-warning">Update</button></td>
                     <td><button className="btn btn-danger">Delete</button></td>
-                </tr>
+                </tr> */}
             </tbody>
         </table>
         
