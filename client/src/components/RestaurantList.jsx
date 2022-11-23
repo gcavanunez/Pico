@@ -32,18 +32,6 @@ const RestaurantList = () => {
       fetchData();
     }, []);
 
-
-// const RestaurantList = () => {
-
-//     useEffect( async() => {
-      
-//         try {
-//           const response = await RestaurantFinder.get("/");
-//           console.log(response);
-//         } catch (err) {}
-      
-//     }, []);
-
   return (
     <div className="list-group">
         <table className="table table-hover table-dark">
