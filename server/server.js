@@ -3,11 +3,13 @@
 
 require("dotenv").config(); //  import dotenv before anything else
 const express = require("express");  // import express app
+const cors = require('cors')
 const db = require('./db') // one dot is current directory and this will automattically search for an index.js file in the db folder - (./db/index.js) is acceptable
 const morgan = require("morgan");  // import morgan app
 const app = express();  // create instance of express app and store in a variable called app
 
-//middleware
+//middleware - note that placement is very important for middleware
+app.use(cors()) //this middleware bypasses CORS error
 app.use(express.json());
 
 
@@ -31,7 +33,7 @@ app.use(express.json());
 app.get("/api/v1/restaurants", async (req, res) =>{
     try{ // for async-await, use a try-catch
         const results = await db.query("select * from restaurants");
-        console.log(results);
+        //console.log(results);
         res.status(200).json({
             results: results.rows.length,
             status: "success",
@@ -53,14 +55,14 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
 
     try{
         const results = await db.query(
-            "select * from restaurants where id = $1", [req.params.id]
+            "select * from restaurants where id = $1", [req.params.id] // paramterized query. Never use string interpolation - it's susceptible to SQL injection attacks
         );
         // select * from restaurants where id = req.params.id    
 
         res.status(200).json({
             status: "success",
             data: {
-                restaurant: results.rows[0],
+                restaurant: results.rows[0], // rows always returns array so we just need the first item in the array, the id
             },
         });
 
@@ -81,7 +83,7 @@ app.post("/api/v1/restaurants", async (req, res) => {
         res.status(201).json({
             status: "success",
             data: {
-                restaurant: results.rows[0],
+                restaurant: results.rows[0], // only the first in the array because only the one restaurant is needed
             },
         });
 

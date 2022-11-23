@@ -13,7 +13,5 @@ const pool = new Pool(
 module.exports = {
   query: (text, params) => pool.query(text, params),
 };  // create new pool instance and pass an object, hence use of curly brackets, to pass the values
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+
 

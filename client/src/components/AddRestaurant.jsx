@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddRestaurant = () => {
+const AddRestaurant = () => {    
   return (
     <div className="mb-4">
         <form action="">
